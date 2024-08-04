@@ -102,7 +102,7 @@ export const getAllUsers = query({
       throw new ConvexError("Unable to fetch all users");
     }
 
-    return users;
+    return users.filter((user) => user.tokenIdentifier !== identity.tokenIdentifier);
   },
 });
 
