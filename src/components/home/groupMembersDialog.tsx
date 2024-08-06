@@ -1,4 +1,4 @@
-import { users } from "@/dummy-data/db";
+// import { users } from "@/dummy-data/db";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,24 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Crown } from "lucide-react";
+import { Conversation } from "@/store/chatStore";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
-const GroupMembersDialog = () => {
+type GroupMemberDialogProps = {
+  selectedConversation: Conversation;
+};
+
+const GroupMembersDialog = ({
+  selectedConversation,
+}: GroupMemberDialogProps) => {
+
+  const groupMembers = useQuery(api.users.getGroupMembers, {
+    conversationId: selectedConversation._id,
+  });
+
+  // console.log("Group Members: ", groupMembers);
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -21,17 +37,17 @@ const GroupMembersDialog = () => {
           <DialogTitle className="my-2">Current Members</DialogTitle>
           <DialogDescription>
             <div className="flex flex-col gap-3 ">
-              {users?.map((user) => (
+              {groupMembers?.map((groupMember) => (
                 <div
-                  key={user._id}
+                  key={groupMember._id}
                   className={`flex gap-3 items-center p-2 rounded`}
                 >
                   <Avatar className="overflow-visible">
-                    {user.isOnline && (
+                    {groupMember.isOnline && (
                       <div className="absolute top-0 right-0 w-2 h-2 bg-green-500 rounded-full border-2 border-foreground" />
                     )}
                     <AvatarImage
-                      src={user.image}
+                      src={groupMember.image}
                       className="rounded-full object-cover"
                     />
                     <AvatarFallback>
@@ -42,9 +58,9 @@ const GroupMembersDialog = () => {
                   <div className="w-full ">
                     <div className="flex items-center gap-2">
                       <h3 className="text-md font-medium">
-                        {user.name || user.email.split("@")[0]}
+                        {groupMember.name || groupMember.email.split("@")[0]}
                       </h3>
-                      {user.admin && (
+                      {groupMember._id === selectedConversation.admin && (
                         <Crown size={16} className="text-yellow-400" />
                       )}
                     </div>

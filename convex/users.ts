@@ -102,7 +102,9 @@ export const getAllUsers = query({
       throw new ConvexError("Unable to fetch all users");
     }
 
-    return users.filter((user) => user.tokenIdentifier !== identity.tokenIdentifier);
+    return users.filter(
+      (user) => user.tokenIdentifier !== identity.tokenIdentifier,
+    );
   },
 });
 
@@ -131,3 +133,31 @@ export const getMe = query({
 });
 
 // TODO: Add getGroupMembers query -- later
+export const getGroupMembers = query({
+  args: {
+    conversationId: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new ConvexError("unauthorized user, while gettting group Memebers");
+    }
+
+    const conversation = await ctx.db
+      .query("conversations")
+      .filter((q) => q.eq(q.field("_id"), args.conversationId))
+      .first();
+
+    if (!conversation) {
+      throw new ConvexError(
+        "conversation not found, while getting group members",
+      );
+    }
+
+    const users = await ctx.db.query("users").collect();
+    const groupMembers = users.filter((user) => conversation.participants.includes(user._id));
+
+    return groupMembers;
+  },
+});
