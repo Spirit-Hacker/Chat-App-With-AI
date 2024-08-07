@@ -7,7 +7,7 @@ interface ComponentVisibleHook {
 }
 
 const useComponentVisible = (
-  initialIsVisible: boolean,
+  initialIsVisible: boolean
 ): ComponentVisibleHook => {
   const [isComponentVisible, setIsComponentVisible] =
     useState(initialIsVisible);

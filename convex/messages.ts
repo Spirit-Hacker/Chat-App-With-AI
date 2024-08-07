@@ -12,7 +12,7 @@ export const sendTextMessages = mutation({
 
     if (!identity) {
       throw new ConvexError(
-        "unauthorization error, while sending text messages",
+        "unauthorization error, while sending text messages"
       );
     }
 
@@ -32,7 +32,7 @@ export const sendTextMessages = mutation({
 
     if (!conversation) {
       throw new ConvexError(
-        "Conversation not found, while sending text messages",
+        "Conversation not found, while sending text messages"
       );
     }
 

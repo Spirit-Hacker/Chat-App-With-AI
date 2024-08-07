@@ -18,9 +18,10 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { toast } from "react-hot-toast";
 
-
 const UserListDialog = () => {
-  const createConversations = useMutation(api.conversations.createConversations);
+  const createConversations = useMutation(
+    api.conversations.createConversations
+  );
   const getMe = useQuery(api.users.getMe);
   const users = useQuery(api.users.getAllUsers);
   const generateUploadUrl = useMutation(api.conversations.generateUploadUrl);
@@ -46,15 +47,14 @@ const UserListDialog = () => {
           participants: [...selectedUsers, getMe?._id!],
           isGroup: false,
         });
-      }
-      else {
+      } else {
         const postUrl = await generateUploadUrl();
         const result = await fetch(postUrl, {
           method: "POST",
           headers: {
-            "Content-Type": selectedImage!.type
+            "Content-Type": selectedImage!.type,
           },
-          body: selectedImage
+          body: selectedImage,
         });
 
         const { storageId } = await result.json();
@@ -64,7 +64,7 @@ const UserListDialog = () => {
           isGroup: true,
           groupName: groupName,
           groupImage: storageId,
-          admin: getMe?._id!
+          admin: getMe?._id!,
         });
       }
 
@@ -75,15 +75,13 @@ const UserListDialog = () => {
       setSelectedImage(null);
 
       // TODO: update global state called "selectedConversation"
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
       toast.error("Failed to create conversation");
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (!selectedImage) {
@@ -103,7 +101,7 @@ const UserListDialog = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogClose ref={closeDialogRef}/>
+          <DialogClose ref={closeDialogRef} />
           <DialogTitle>USERS</DialogTitle>
         </DialogHeader>
 
@@ -133,7 +131,10 @@ const UserListDialog = () => {
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
             />
-            <Button className="flex gap-2" onClick={() => imgRef.current?.click()}>
+            <Button
+              className="flex gap-2"
+              onClick={() => imgRef.current?.click()}
+            >
               <ImageIcon size={20} />
               Group Image
             </Button>
@@ -149,7 +150,7 @@ const UserListDialog = () => {
               onClick={() => {
                 if (selectedUsers.includes(user._id)) {
                   setSelectedUsers(
-                    selectedUsers.filter((id) => id !== user._id),
+                    selectedUsers.filter((id) => id !== user._id)
                   );
                 } else {
                   setSelectedUsers([...selectedUsers, user._id]);

@@ -13,9 +13,9 @@ const TaskPage = () => {
       {tasks?.map((task) => (
         <div className="flex gap-2 items-center" key={task._id}>
           <span>{task.text}</span>
-          <button 
+          <button
             className="px-1 py-2 bg-slate-800"
-            onClick={async() => await deleteTask({taskId: task._id})}
+            onClick={async () => await deleteTask({ taskId: task._id })}
           >
             {"Delete Task"}
           </button>

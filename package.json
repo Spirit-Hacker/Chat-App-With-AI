@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.0.22",
@@ -21,6 +22,7 @@
     "convex": "^1.13.2",
     "emoji-picker-react": "^4.11.1",
     "lucide-react": "^0.417.0",
+    "messaging_app_with_ai": "file:",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
     "react": "^18",
@@ -38,6 +40,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

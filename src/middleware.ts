@@ -1,9 +1,9 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-const isPrivateRoute = createRouteMatcher(['/(.*)']);
+const isPrivateRoute = createRouteMatcher(["/(.*)"]);
 
-export default clerkMiddleware((auth, req) =>{
+export default clerkMiddleware((auth, req) => {
   if (isPrivateRoute(req)) {
     auth().protect();
   }
@@ -13,4 +13,4 @@ export default clerkMiddleware((auth, req) =>{
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
-}
+};

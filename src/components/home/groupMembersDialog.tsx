@@ -20,7 +20,6 @@ type GroupMemberDialogProps = {
 const GroupMembersDialog = ({
   selectedConversation,
 }: GroupMemberDialogProps) => {
-
   const groupMembers = useQuery(api.users.getGroupMembers, {
     conversationId: selectedConversation._id,
   });

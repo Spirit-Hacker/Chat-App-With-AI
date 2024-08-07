@@ -21,8 +21,8 @@ export const createConversations = mutation({
       .filter((q) =>
         q.or(
           q.eq(q.field("participants"), args.participants),
-          q.eq(q.field("participants"), args.participants.reverse()),
-        ),
+          q.eq(q.field("participants"), args.participants.reverse())
+        )
       )
       .first();
 
@@ -70,7 +70,7 @@ export const getMyConversations = query({
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
       )
       .unique();
 
@@ -94,7 +94,7 @@ export const getMyConversations = query({
 
         if (!conversation.isGroup) {
           const otherUserId = conversation.participants.find(
-            (id) => id !== user._id,
+            (id) => id !== user._id
           );
           const otherUser = await ctx.db
             .query("users")
@@ -115,7 +115,7 @@ export const getMyConversations = query({
           ...conversation,
           lastMessage: lastMessage[0] || null,
         };
-      }),
+      })
     );
 
     return conversationsWithDetails;

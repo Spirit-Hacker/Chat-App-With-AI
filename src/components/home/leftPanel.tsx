@@ -13,7 +13,7 @@ const LeftPanel = () => {
   const { isAuthenticated } = useConvexAuth();
   const conversations = useQuery(
     api.conversations.getMyConversations,
-    isAuthenticated ? undefined : "skip",
+    isAuthenticated ? undefined : "skip"
   );
 
   console.log("conversation: ", conversations);

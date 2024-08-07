@@ -28,7 +28,7 @@ export const updateUser = internalMutation({
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", args.tokenIdentifier),
+        q.eq("tokenIdentifier", args.tokenIdentifier)
       )
       .unique();
 
@@ -51,7 +51,7 @@ export const setUserOnline = internalMutation({
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", args.tokenIdentifier),
+        q.eq("tokenIdentifier", args.tokenIdentifier)
       )
       .unique();
 
@@ -73,7 +73,7 @@ export const setUserOffline = internalMutation({
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", args.tokenIdentifier),
+        q.eq("tokenIdentifier", args.tokenIdentifier)
       )
       .unique();
 
@@ -103,7 +103,7 @@ export const getAllUsers = query({
     }
 
     return users.filter(
-      (user) => user.tokenIdentifier !== identity.tokenIdentifier,
+      (user) => user.tokenIdentifier !== identity.tokenIdentifier
     );
   },
 });
@@ -120,7 +120,7 @@ export const getMe = query({
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
       )
       .unique();
 
@@ -151,12 +151,14 @@ export const getGroupMembers = query({
 
     if (!conversation) {
       throw new ConvexError(
-        "conversation not found, while getting group members",
+        "conversation not found, while getting group members"
       );
     }
 
     const users = await ctx.db.query("users").collect();
-    const groupMembers = users.filter((user) => conversation.participants.includes(user._id));
+    const groupMembers = users.filter((user) =>
+      conversation.participants.includes(user._id)
+    );
 
     return groupMembers;
   },

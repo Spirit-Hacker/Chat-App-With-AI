@@ -12,7 +12,8 @@ const Conversation = ({ conversation }: { conversation: any }) => {
   const lastMessage = conversation.lastMessage;
   const lastMessageType = lastMessage?.messageType;
   const me = useQuery(api.users.getMe);
-  const { selectedConversation, setSelectedConversation } = useConversationStore();
+  const { selectedConversation, setSelectedConversation } =
+    useConversationStore();
 
   const activeBgClass = selectedConversation?._id === conversation._id;
 
@@ -41,7 +42,7 @@ const Conversation = ({ conversation }: { conversation: any }) => {
             </h3>
             <span className="text-[10px] lg:text-xs text-gray-500 ml-auto">
               {formatDate(
-                lastMessage?._creationTime || conversation._creationTime,
+                lastMessage?._creationTime || conversation._creationTime
               )}
             </span>
           </div>
