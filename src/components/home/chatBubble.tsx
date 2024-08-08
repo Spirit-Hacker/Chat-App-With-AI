@@ -100,13 +100,15 @@ export default ChatBubble;
 
 const VideoMessage = ({ message }: { message: IMessage }) => {
   return (
-    <ReactPlayer
-      url={message.content}
-      controls={true}
-      width={"250px"}
-      height={"100%"}
-      light={true}
-    />
+    <div className="w-[100%] pr-2">
+      <ReactPlayer
+        url={message.content}
+        controls={true}
+        width={"250px"}
+        height={"100%"}
+        light={true}
+      />
+    </div>
   );
 };
 
