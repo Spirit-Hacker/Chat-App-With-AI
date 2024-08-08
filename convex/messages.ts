@@ -1,6 +1,5 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
 
 export const sendTextMessages = mutation({
   args: {
@@ -95,5 +94,57 @@ export const getMessages = query({
     }
 
     return messagesWithSender;
+  },
+});
+
+export const sendImage = mutation({
+  args: {
+    imgId: v.id("_storage"),
+    sender: v.id("users"),
+    conversation: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new ConvexError(
+        "unauthorization error, while sending image messages"
+      );
+    }
+
+    const content = (await ctx.storage.getUrl(args.imgId)) as string;
+
+    await ctx.db.insert("messages", {
+      content: content,
+      messageType: "image",
+      sender: args.sender,
+      conversation: args.conversation,
+    });
+  },
+});
+
+export const sendVideo = mutation({
+  args: {
+    videoId: v.id("_storage"),
+    sender: v.id("users"),
+    conversation: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new ConvexError(
+        "unauthorization error, while sending video messages"
+      );
+    }
+
+    const content = (await ctx.storage.getUrl(args.videoId)) as string;
+
+    await ctx.db.insert("messages", {
+      content: content,
+      messageType: "video",
+      sender: args.sender,
+      conversation: args.conversation,
+    });
   },
 });
