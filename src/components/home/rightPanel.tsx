@@ -11,8 +11,8 @@ import { useConvexAuth } from "convex/react";
 const RightPanel = () => {
   const { selectedConversation, setSelectedConversation } =
     useConversationStore();
-  const { isLoading } = useConvexAuth();
-  if (isLoading) return null;
+  // const { isLoading } = useConvexAuth();
+  // if (isLoading) return null;
 
   if (!selectedConversation) return <ChatPlaceHolder />;
 
