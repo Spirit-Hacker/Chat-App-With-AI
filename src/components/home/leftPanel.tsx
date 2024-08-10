@@ -12,13 +12,13 @@ import { useEffect } from "react";
 import { useConversationStore } from "@/store/chatStore";
 
 const LeftPanel = () => {
+  const { selectedConversation, setSelectedConversation } =
+    useConversationStore();
   const { isAuthenticated, isLoading } = useConvexAuth();
   const conversations = useQuery(
     api.conversations.getMyConversations,
     isAuthenticated ? undefined : "skip"
   );
-  const { selectedConversation, setSelectedConversation } =
-    useConversationStore();
 
   useEffect(() => {
     const conversationIds = conversations?.map((conversation) => {

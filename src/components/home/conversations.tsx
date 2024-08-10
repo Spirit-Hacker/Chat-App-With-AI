@@ -7,13 +7,13 @@ import { api } from "../../../convex/_generated/api";
 import { useConversationStore } from "@/store/chatStore";
 
 const Conversation = ({ conversation }: { conversation: any }) => {
+  const { selectedConversation, setSelectedConversation } =
+    useConversationStore();
   const conversationImage = conversation.groupImage || conversation.image;
   const conversationName = conversation.groupName || conversation.name;
   const lastMessage = conversation.lastMessage;
   const lastMessageType = lastMessage?.messageType;
   const me = useQuery(api.users.getMe);
-  const { selectedConversation, setSelectedConversation } =
-    useConversationStore();
 
   const activeBgClass = selectedConversation?._id === conversation._id;
 

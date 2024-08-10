@@ -16,6 +16,8 @@ import { useConversationStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 
 const MediaDropdown = () => {
+  const { selectedConversation } = useConversationStore();
+  const me = useQuery(api.users.getMe);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>();
@@ -25,8 +27,6 @@ const MediaDropdown = () => {
   const generateUploadUrl = useMutation(api.conversations.generateUploadUrl);
   const sendImage = useMutation(api.messages.sendImage);
   const sendVideo = useMutation(api.messages.sendVideo);
-  const { selectedConversation } = useConversationStore();
-  const me = useQuery(api.users.getMe);
 
   const handleSendImages = async () => {
     setIsLoading(true);

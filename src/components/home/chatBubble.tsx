@@ -15,12 +15,12 @@ type ChatBubbleProps = {
 };
 
 const ChatBubble = ({ message, me, previousMessage }: ChatBubbleProps) => {
+  const { selectedConversation } = useConversationStore();
   const date = new Date(message._creationTime);
   const hour = date.getHours().toString().padStart(2, "0");
   const minute = date.getMinutes().toString().padStart(2, "0");
   const time = `${hour}:${minute}`;
 
-  const { selectedConversation } = useConversationStore();
   const isMember = selectedConversation!.participants.includes(
     message!.sender._id
   );
